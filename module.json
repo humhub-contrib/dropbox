@@ -1,0 +1,11 @@
+{
+    "id": "dropbox",
+    "name": "Dropbox module",
+    "description": "Allows users to share dropbox files in spaces or user profiles.",
+    "keywords": ["dropbox"],
+	"version": "0.1",
+    "humhub": {
+        "minVersion": "0.11.2"
+    }
+}
+
