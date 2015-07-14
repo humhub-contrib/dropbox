@@ -38,7 +38,7 @@ class DropboxModule extends HWebModule
         // Is Module enabled on this workspace?
         if ($user->isModuleEnabled('dropbox')) {
             $event->sender->addItem(array(
-                'label' => Yii::t('DropboxModule.base', 'Dropbox'),
+                'label' => Yii::t('DropboxModule.base', 'Add Dropbox files'),
                 'url' => Yii::app()->createUrl('/dropbox/create/index', array('uguid' => $user->guid)),
                 'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'dropbox'),
             ));
@@ -63,7 +63,7 @@ class DropboxModule extends HWebModule
         $space = Yii::app()->getController()->getSpace();
         if ($space->isModuleEnabled('dropbox')) {
             $event->sender->addItem(array(
-                'label' => Yii::t('DropboxModule.base', 'Dropbox'),
+                'label' => Yii::t('DropboxModule.base', 'Add Dropbox files'),
                 'url' => Yii::app()->createUrl('/dropbox/create/index', array('sguid' => $space->guid)),
                 'icon' => '<i class="fa fa-dropbox"></i>',
                 'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'dropbox')

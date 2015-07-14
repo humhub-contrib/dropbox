@@ -1,6 +1,6 @@
 {
     "id": "dropbox",
-    "name": "Dropbox module",
+    "name": "Dropbox File Chooser",
     "description": "Allows users to share dropbox files in spaces or user profiles.",
     "keywords": ["dropbox"],
 	"version": "0.1",

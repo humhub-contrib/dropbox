@@ -9,7 +9,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <div class="form-group">
     <?php echo $form->labelEx($model, 'message'); ?>
-    <?php echo $form->textArea($model, 'message', array('class' => 'form-control autosize', 'placeholder' => Yii::t('DropboxModule.views_dropbox_index', 'Describe your images'))); ?>
+    <?php echo $form->textArea($model, 'message', array('class' => 'form-control autosize', 'placeholder' => Yii::t('DropboxModule.views_dropbox_index', 'Describe your files'))); ?>
     <?php echo $form->error($model, 'message'); ?>
 </div>
 
