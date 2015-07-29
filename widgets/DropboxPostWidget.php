@@ -1,16 +1,19 @@
 <?php
 
+namespace humhub\modules\dropbox\widgets;
+
 /**
  * This widget is used to show a dropbox post wall entry
  *
  * @package humhub.modules.dropbox.widgets
  * @since 0.10
  */
-class DropboxPostWidget extends HWidget
+class DropboxPostWidget extends \humhub\components\Widget
 {
 
     /**
-     * The dropbox post object
+     * The dropbox post 
+     * object
      *
      * @var DropboxPost
      */
@@ -22,10 +25,11 @@ class DropboxPostWidget extends HWidget
     public function run()
     {
 
-        $this->render('dropboxPost', array(
-            'object' => $this->object,
+        return $this->render('dropboxPost', array(
+                    'object' => $this->object,
         ));
     }
 
 }
+
 ?>

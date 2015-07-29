@@ -1,4 +1,9 @@
+<?php
 
+use humhub\compat\CActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+?>
 <div class="panel panel-default">
     <div class="panel-heading"><?php echo Yii::t('DropboxModule.views_config_index', 'Dropbox Module Configuration'); ?></div>
     <div class="panel-body">
@@ -7,12 +12,7 @@
 
         <br/>
 
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'dropbox-configure-form',
-            'enableAjaxValidation' => true,
-        ));
-        ?>
+        <?php $form = CActiveForm::begin(); ?>
 
         <?php echo $form->errorSummary($model); ?>
 
@@ -24,12 +24,9 @@
 
 
         <hr>
-        <?php echo CHtml::submitButton(Yii::t('DropboxModule.views_config_index', 'Save'), array('class' => 'btn btn-primary')); ?>
-        <a class="btn btn-default" href="<?php echo $this->createUrl('//admin/module'); ?>"><?php echo Yii::t('DropboxModule.views_config_index', 'Back to modules'); ?></a>
+        <?php echo Html::submitButton(Yii::t('DropboxModule.views_config_index', 'Save'), array('class' => 'btn btn-primary')); ?>
+        <a class="btn btn-default" href="<?php echo Url::to(['/admin/module']); ?>"><?php echo Yii::t('DropboxModule.views_config_index', 'Back to modules'); ?></a>
 
-        <!-- show flash message after saving -->
-        <?php $this->widget('application.widgets.DataSavedWidget'); ?>
-
-        <?php $this->endWidget(); ?>
+        <?php CActiveForm::end(); ?>
     </div>
 </div>
