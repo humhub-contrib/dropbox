@@ -4,16 +4,22 @@ namespace humhub\modules\dropbox;
 
 use Yii;
 use humhub\modules\user\models\User;
+use humhub\modules\space\models\Space;
 use humhub\modules\dropbox\models\DropboxPost;
+use humhub\modules\content\components\ContentContainerModule;
+use humhub\modules\content\components\ContentContainerActiveRecord;
 
-class Module extends \humhub\components\Module
+class Module extends ContentContainerModule
 {
 
-    public function behaviors()
+    /**
+     * @inheritdoc
+     */
+    public function getContentContainerTypes()
     {
         return [
-            \humhub\modules\user\behaviors\UserModule::className(),
-            \humhub\modules\space\behaviors\SpaceModule::className(),
+            User::className(),
+            Space::className(),
         ];
     }
 
@@ -36,6 +42,9 @@ class Module extends \humhub\components\Module
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getConfigUrl()
     {
         return \yii\helpers\Url::to(['/dropbox/admin']);
@@ -60,42 +69,38 @@ class Module extends \humhub\components\Module
         }
     }
 
-    public function disableSpaceModule(Space $space)
+    /**
+     * @inheritdoc
+     */
+    public function disableContentContainer(ContentContainerActiveRecord $container)
     {
-        foreach (DropboxPost::find()->contentContainer($space)->all() as $post) {
-            $post->delete();
-        }
-    }
-
-    public function disableUserModule(User $user)
-    {
-        foreach (DropboxPost::find()->contentContainer($user)->all() as $post) {
+        foreach (DropboxPost::find()->contentContainer($container)->all() as $post) {
             $post->delete();
         }
     }
 
     /**
-     * Returns the user module config url.
-     *
-     * @return String
+     * @inheritdoc
      */
-    public function getUserModuleConfigUrl(User $user)
+    public function getContentContainerConfigUrl(ContentContainerActiveRecord $container)
     {
-        return $user->createUrl('/dropbox/user');
-    }
-
-    public function disable()
-    {
-        if (parent::disable()) {
-
-            foreach (DropboxPost::find()->all() as $post) {
-                $post->delete();
-            }
-
-            return true;
+        if ($container instanceof User) {
+            return $container->createUrl('/dropbox/user');
         }
 
-        return false;
+        return "";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function disable()
+    {
+        parent::disable();
+
+        foreach (DropboxPost::find()->all() as $post) {
+            $post->delete();
+        }
     }
 
 }
