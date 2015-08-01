@@ -96,11 +96,11 @@ class Module extends ContentContainerModule
      */
     public function disable()
     {
-        parent::disable();
-
         foreach (DropboxPost::find()->all() as $post) {
             $post->delete();
         }
+        
+        parent::disable();
     }
 
 }
