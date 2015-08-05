@@ -8,25 +8,16 @@ namespace humhub\modules\dropbox\widgets;
  * @package humhub.modules.dropbox.widgets
  * @since 0.10
  */
-class DropboxPostWidget extends \humhub\components\Widget
+class DropboxPostWidget extends \humhub\modules\content\widgets\WallEntry
 {
 
-    /**
-     * The dropbox post 
-     * object
-     *
-     * @var DropboxPost
-     */
-    public $object;
+    public $editRoute = "/dropbox/index/edit";
 
-    /**
-     * Executes the widget.
-     */
     public function run()
     {
 
         return $this->render('dropboxPost', array(
-                    'object' => $this->object,
+                    'object' => $this->contentObject,
         ));
     }
 

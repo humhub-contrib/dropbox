@@ -22,7 +22,7 @@ class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord
 {
 
     public $autoAddToWall = true;
-    public $wallEditRoute = '/dropbox/index/edit';
+    public $wallEntryClass = "humhub\modules\dropbox\widgets\DropboxPostWidget";
 
     /**
      * @return string the associated database table name
@@ -48,21 +48,14 @@ class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord
         return $this->hasMany(DropboxFile::className(), ['object_id' => 'id'])->andWhere(['dropbox_file.object_model' => DropboxPost::className()]);
     }
 
-    public function getWallOut()
+    public function getContentName()
     {
-        return \humhub\modules\dropbox\widgets\DropboxPostWidget::widget(array('object' => $this));
+        return Yii::t('DropboxModule.models_DropboxPost', 'Dropbox post');
     }
 
-    /**
-     * Returns a title/text which identifies this IContent.
-     *
-     * e.g. Post: foo bar 123...
-     *
-     * @return String
-     */
-    public function getContentTitle()
+    public function getContentDescription()
     {
-        return Yii::t('DropboxModule.models_DropboxPost', 'Dropbox post') . " \"" . \humhub\libs\Helpers::truncateText($this->message, 60) . "\"";
+        return$this->message;
     }
 
 }
