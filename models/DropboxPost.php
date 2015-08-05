@@ -3,6 +3,7 @@
 namespace humhub\modules\dropbox\models;
 
 use Yii;
+use humhub\modules\search\interfaces\Searchable;
 
 /**
  * This is the model class for table "dropbox_post".
@@ -18,7 +19,7 @@ use Yii;
  * @package humhub.modules.dropbox.models
  * @since 0.5
  */
-class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord
+class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord implements Searchable
 {
 
     public $autoAddToWall = true;
@@ -56,6 +57,16 @@ class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord
     public function getContentDescription()
     {
         return$this->message;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSearchAttributes()
+    {
+        return array(
+            'message' => $this->message,
+        );
     }
 
 }
