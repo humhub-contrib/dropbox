@@ -64,8 +64,15 @@ class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord
      */
     public function getSearchAttributes()
     {
+        $fileNames = "";
+
+        foreach($this->files as $file) {
+            $fileNames .= $file->name;
+        }
+
         return array(
             'message' => $this->message,
+            'fileNames' => $fileNames
         );
     }
 
