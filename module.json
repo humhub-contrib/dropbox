@@ -3,7 +3,7 @@
     "name": "Dropbox File Chooser",
     "description": "Allows users to share dropbox files in spaces or user profiles.",
     "keywords": ["dropbox"],
-    "version": "0.2.0",
+    "version": "0.2.1",
     "humhub": {
         "minVersion": "0.20"
     }
