@@ -1,5 +1,10 @@
 <?php
 
+namespace humhub\modules\dropbox\models;
+
+use Yii;
+use humhub\modules\search\interfaces\Searchable;
+
 /**
  * This is the model class for table "dropbox_post".
  *
@@ -14,27 +19,16 @@
  * @package humhub.modules.dropbox.models
  * @since 0.5
  */
-
-class DropboxPost extends HActiveRecordContent
+class DropboxPost extends \humhub\modules\content\components\ContentActiveRecord implements Searchable
 {
 
     public $autoAddToWall = true;
-    public $wallEditRoute = '//dropbox/index/edit';
-
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return DropboxPost the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
+    public $wallEntryClass = "humhub\modules\dropbox\widgets\DropboxPostWidget";
 
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'dropbox_post';
     }
@@ -44,74 +38,42 @@ class DropboxPost extends HActiveRecordContent
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('message', 'required'),
-            array('created_by, updated_by', 'numerical', 'integerOnly' => true),
-            array('message, created_at, updated_at', 'safe'),
+            array('message', 'safe'),
         );
     }
 
-    public function relations() {
-        return array(
-            'files' => array(self::HAS_MANY, 'DropboxFile', 'object_id', 'condition'=>'object_model="DropboxPost"'),
-            'user' => array(self::BELONGS_TO, 'User', 'created_by'),
-        );
-    }
-    
-    /**
-     * Before Delete, remove LikeCount (Cache) of target object.
-     * Remove activity
-     */
-    protected function beforeDelete()
+    public function getFiles()
     {
+        return $this->hasMany(DropboxFile::className(), ['object_id' => 'id'])->andWhere(['dropbox_file.object_model' => DropboxPost::className()]);
+    }
 
-        Notification::remove('DropboxPost', $this->id);
+    public function getContentName()
+    {
+        return Yii::t('DropboxModule.models_DropboxPost', 'Dropbox post');
+    }
 
-        return parent::beforeDelete();
+    public function getContentDescription()
+    {
+        return$this->message;
     }
 
     /**
-     * Before Save Addons
-     *
-     * @return type
+     * @inheritdoc
      */
-    public function afterSave()
+    public function getSearchAttributes()
     {
+        $fileNames = "";
 
-        parent::afterSave();
-
-        if ($this->isNewRecord) {
-            $activity = Activity::CreateForContent($this);
-            $activity->type = "DropboxPostCreated";
-            $activity->module = "dropbox";
-            $activity->save();
-            $activity->fire();
+        foreach($this->files as $file) {
+            $fileNames .= $file->name;
         }
 
-        // Handle mentioned users
-        //UserMentioning::parse($this, $this->message);
-        
-        return true;
-    }
-    
-    public function getWallOut()
-    {
-        return Yii::app()->getController()->widget('application.modules.dropbox.widgets.DropboxPostWidget', array('object' => $this), true);
-    }
-
-
-    /**
-     * Returns a title/text which identifies this IContent.
-     *
-     * e.g. Post: foo bar 123...
-     *
-     * @return String
-     */
-    public function getContentTitle()
-    {
-        return Yii::t('DropboxModule.models_DropboxPost', 'Dropbox post') . " \"" . Helpers::truncateText($this->message, 60) . "\"";
+        return array(
+            'message' => $this->message,
+            'fileNames' => $fileNames
+        );
     }
 
 }

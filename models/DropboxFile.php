@@ -1,5 +1,9 @@
 <?php
 
+namespace humhub\modules\dropbox\models;
+
+use humhub\components\ActiveRecord;
+
 /**
  * This is the model class for table "dropbox_file".
  *
@@ -18,18 +22,22 @@
  * @package humhub.modules.dropbox.models
  * @since 0.5
  */
-class DropboxFile extends HActiveRecord
+class DropboxFile extends ActiveRecord
 {
 
-
     /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return DropboxImage the static model class
+     * @inheritdoc
      */
-    public static function model($className = __CLASS__)
+    public function behaviors()
     {
-        return parent::model($className);
+        return [
+            [
+                'class' => \humhub\components\behaviors\PolymorphicRelation::className(),
+                'mustBeInstanceOf' => [
+                    ActiveRecord::className(),
+                ]
+            ]
+        ];
     }
 
     /**
@@ -40,13 +48,13 @@ class DropboxFile extends HActiveRecord
      */
     public static function getFilesOfObject(HActiveRecord $object)
     {
-        return DropboxFile::model()->findAllByAttributes(array('object_id' => $object->getPrimaryKey(), 'object_model' => get_class($object)));
+        return DropboxFile::findAll(array('object_id' => $object->getPrimaryKey(), 'object_model' => get_class($object)));
     }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'dropbox_file';
     }
@@ -57,27 +65,19 @@ class DropboxFile extends HActiveRecord
     public function rules()
     {
         return array(
-            array('created_by, updated_by', 'numerical', 'integerOnly' => true),
-            array('name', 'length', 'max' => 128),
-            array('created_at, updated_at', 'safe'),
+            array('name', 'string', 'max' => 128),
         );
     }
 
-    /**
-     * Add mix-ins to this model
-     *
-     * @return type
-     */
-    public function behaviors()
+    public function beforeSave($insert)
     {
-        return array(
-            'HUnderlyingObjectBehavior' => array(
-                'class' => 'application.behaviors.HUnderlyingObjectBehavior',
-                'mustBeInstanceOf' => array('HActiveRecord'),
-            ),
-        );
-    }
 
+        if ($this->thumbnail_link == "") {
+            $this->thumbnail_link = "";
+        }
+
+        return parent::beforeSave($insert);
+    }
 
     /**
      * Checks if given file can deleted.
@@ -87,8 +87,8 @@ class DropboxFile extends HActiveRecord
      */
     public function canDelete($userId = "")
     {
-        $object = $this->getUnderlyingObject();
-        if ($object !== null && ($object instanceof HActiveRecordContent || $object instanceof HActiveRecordContentAddon)) {
+        $object = $this->getPolymorphicRelation();
+        if ($object !== null && ($object instanceof \humhub\modules\content\components\ContentActiveRecord || $object instanceof \humhub\modules\content\components\ContentAddonActiveRecord)) {
             return $object->content->canWrite($userId);
         }
 

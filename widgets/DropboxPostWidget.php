@@ -1,31 +1,26 @@
 <?php
 
+namespace humhub\modules\dropbox\widgets;
+
 /**
  * This widget is used to show a dropbox post wall entry
  *
  * @package humhub.modules.dropbox.widgets
  * @since 0.10
  */
-class DropboxPostWidget extends HWidget
+class DropboxPostWidget extends \humhub\modules\content\widgets\WallEntry
 {
 
-    /**
-     * The dropbox post object
-     *
-     * @var DropboxPost
-     */
-    public $object;
+    public $editRoute = "/dropbox/index/edit";
 
-    /**
-     * Executes the widget.
-     */
     public function run()
     {
 
-        $this->render('dropboxPost', array(
-            'object' => $this->object,
+        return $this->render('dropboxPost', array(
+                    'object' => $this->contentObject,
         ));
     }
 
 }
+
 ?>

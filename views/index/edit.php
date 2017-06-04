@@ -1,10 +1,8 @@
 <?php
-$form = $this->beginWidget('CActiveForm', array(
-    'id' => 'dropbox-create-post-from',
-    'action' => Yii::app()->createUrl('//dropbox/index/edit', array(
-        'id' => $id
-    ))
-));
+
+use humhub\compat\CActiveForm;
+
+$form = CActiveForm::begin();
 ?>
 
 <div class="form-group">
@@ -21,7 +19,7 @@ $form = $this->beginWidget('CActiveForm', array(
             <?php echo $form->textField($model, 'dropboxFileId', array('id' => 'dropbox_files_list_' . $id, 'placeholder' => Yii::t('DropboxModule.views_dropbox_index', 'Select files from dropbox'), 'class' => 'tag_input_field')); ?>
         </li>
         <?php
-        $this->widget('application.modules.dropbox.widgets.DropboxFileListerWidget', array(
+        echo humhub\modules\dropbox\widgets\DropboxFileListerWidget::widget(array(
             'inputId' => 'dropbox_files_list_' . $id,
             'model' => $model,
             'attribute' => 'dropboxFileId',
@@ -37,15 +35,22 @@ $form = $this->beginWidget('CActiveForm', array(
 
 
 <div>
-    <?php echo HHtml::ajaxButton('Save', array('//dropbox/index/edit', 'id' => $id), array(
-        'type' => 'POST',
-        'success' => 'function(html){ $("#dropbox-post-' . $id . '").replaceWith(html); }',
-    ), array('class' => 'btn btn-primary', 'id' => 'post_edit_post_' . $id));
-
+    <?php
+    echo \humhub\widgets\AjaxButton::widget([
+        'label' => "Save",
+        'ajaxOptions' => [
+            'type' => 'POST',
+            'success' => 'function(html){ $(".wall_' . $dropboxPost->getUniqueId() . '").replaceWith(html); }',
+            'url' => \yii\helpers\Url::to(['/dropbox/index/edit', 'id' => $id]),
+        ],
+        'htmlOptions' => [
+            'class' => 'btn btn-primary', 'id' => 'post_edit_post_' . $id
+        ]
+    ]);
     ?>
 </div>
 
-<?php $this->endWidget(); ?>
+<?php CActiveForm::end(); ?>
 
 <script type="text/javascript">
     // set the size for one row (Firefox)
