@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Access denied!' => 'Accès refusé !',
+  'Access denied!' => 'Accès refusé.',
 );
