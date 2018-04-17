@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Show warning on posting' => 'Beim Absenden Warnung zeigen',
+  'Show warning on posting' => 'Zeige Warnung beim Posten',
 );
