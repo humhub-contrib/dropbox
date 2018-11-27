@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Invalid file' => '',
+  'Invalid file' => 'Érvénytelen fájl',
   'Message' => 'Üzenet',
 );
