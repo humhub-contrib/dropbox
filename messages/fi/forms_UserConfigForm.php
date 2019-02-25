@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Show warning on posting' => '',
-];
+return array (
+  'Show warning on posting' => 'Näytä varoitus julkaisuissa',
+);

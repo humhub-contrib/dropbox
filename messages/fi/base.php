@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Add Dropbox files' => '',
-];
+return array (
+  'Add Dropbox files' => 'Lisää Dropbox-tiedostoja',
+);

@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Dropbox post' => '',
-];
+return array (
+  'Dropbox post' => 'Dropbox',
+);

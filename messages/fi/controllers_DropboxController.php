@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Access denied!' => '',
-];
+return array (
+  'Access denied!' => 'Käyttö estetty',
+);

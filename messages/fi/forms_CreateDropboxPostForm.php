@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'Invalid file' => '',
-    'Message' => '',
-];
+return array (
+  'Invalid file' => 'Virheellinen tiedosto',
+  'Message' => 'Viesti',
+);

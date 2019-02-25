@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Dropbox API Key' => '',
-];
+return array (
+  'Dropbox API Key' => 'Dropboxin API-avain',
+);

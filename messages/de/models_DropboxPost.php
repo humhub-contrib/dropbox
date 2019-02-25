@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Dropbox post' => 'Dropbox-Post',
+  'Dropbox post' => 'Dropbox-Posting',
 );
