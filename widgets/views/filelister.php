@@ -17,7 +17,7 @@ $this->registerJsVar('openIcon', $this->context->openIcon);
 $this->registerJsVar('warning_on_posting_modal_title', Yii::t('DropboxModule.widgets_DropboxFileListerWidget', '<strong>Attention!</strong> You are sharing private files'));
 $this->registerJsVar('warning_on_posting_modal_message', Yii::t('DropboxModule.widgets_DropboxFileListerWidget', 'The files you want to share are private. In order to share files in your space we have generated a shared link. Everyone with the link can see the file.<br/>Are you sure you want to share?'));
 $this->registerJsVar('unset_warning_on_posting_checkbox_label', Yii::t('DropboxModule.widgets_DropboxFileListerWidget', 'Do not show this warning in future'));
-$this->registerJsVar('warning_on_posting_modal_confirm', Yii::t('DropboxModule.widgets_DropboxFileListerWidget', "Yes, I'm sure"));
+$this->registerJsVar('warning_on_posting_modal_confirm', Yii::t('DropboxModule.widgets_DropboxFileListerWidget', "Yes, I\'m sure"));
 $this->registerJsVar('warning_on_posting_modal_cancel', Yii::t('DropboxModule.widgets_DropboxFileListerWidget', 'Cancel'));
 ?>
 <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="<?php echo Setting::Get('apiKey', 'dropbox'); ?>"></script>
