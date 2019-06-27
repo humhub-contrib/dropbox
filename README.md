@@ -1,3 +1,5 @@
+# DEPRECATED
+
 ## Description
 
 Allows users to share dropbox files in spaces or user profiles.
